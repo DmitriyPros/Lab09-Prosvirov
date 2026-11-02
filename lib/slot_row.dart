@@ -14,27 +14,30 @@ class SlotRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(
-          slot1,
-          width: 100,
-          height: 100,
-        ),
-        SizedBox(width: 16),
-        Image.asset(
-          slot2,
-          width: 100,
-          height: 100,
-        ),
-        SizedBox(width: 16),
-        Image.asset(
-          slot3,
-          width: 100,
-          height: 100,
-        ),
-      ],
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            slot1,
+            width: 100,
+            height: 100,
+          ),
+          const SizedBox(width: 16),
+          Image.asset(
+            slot2,
+            width: 100,
+            height: 100,
+          ),
+          const SizedBox(width: 16),
+          Image.asset(
+            slot3,
+            width: 100,
+            height: 100,
+          ),
+        ],
+      ),
     );
   }
 }
