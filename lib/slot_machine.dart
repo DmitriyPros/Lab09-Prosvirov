@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:slot_machine_prosvirov/slot_row.dart';
+import 'sound_service.dart';
 
 class SlotMachine extends StatefulWidget {
   const SlotMachine({super.key});
@@ -19,12 +20,28 @@ class _SlotMachineState
     'assets/images/seven.png',
   ];
 
+  var _isMuted = false;
+  void _toggleMute() {
+    SoundService.toggleMute();
+    setState(() {
+      _isMuted = SoundService.isMuted;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    SoundService.playBackground();
+  }
+
   var _coins = 10;
   var _slot1 = 'assets/images/cherry.png';
   var _slot2 = 'assets/images/lemon.png';
   var _slot3 = 'assets/images/seven.png';
   var _message = '';
   var _isSpinning = false;
+
+  var _backgroundStarted = false;
 
   void _reset() {
     setState(() {
@@ -63,10 +80,15 @@ class _SlotMachineState
 
   Future<void> _spin() async {
     if (_coins <= 0 || _isSpinning) return;
+    SoundService.playClick();
     setState(() {
       _isSpinning = true;
       _message = '';
     });
+    if (!_backgroundStarted) {
+      SoundService.playBackground();
+      _backgroundStarted = true;
+    }
 
     final result1 = await _spinReel(
       totalTicks: 10,
@@ -95,13 +117,16 @@ class _SlotMachineState
             'assets/images/seven.png') {
           _coins += 10;
           _message = 'ДЖЕКПОТ! +10 МОНЕТ!';
+          SoundService.playJackpot();
         } else {
           _coins += 3;
           _message = 'Победа! +3 монеты!';
+          SoundService.playWin();
         }
       } else {
         _coins -= 1;
         _message = 'Попробуй ещё раз -1 монета!';
+        SoundService.playLose();
       }
     });
   }
@@ -111,6 +136,25 @@ class _SlotMachineState
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Align(
+          alignment: Alignment.topRight,
+          child: Padding(
+            padding: EdgeInsets.only(
+              right: 16,
+              top: 8,
+            ),
+            child: IconButton(
+              onPressed: _toggleMute,
+              icon: Icon(
+                _isMuted
+                    ? Icons.volume_off
+                    : Icons.volume_up,
+                color: Colors.white,
+                size: 28,
+              ),
+            ),
+          ),
+        ),
         Text(
           'Монеты: $_coins',
           style: TextStyle(
@@ -179,7 +223,7 @@ class _SlotMachineState
 
         SizedBox(height: 12),
         TextButton(
-          onPressed: _isSpinning ? null: _reset,
+          onPressed: _isSpinning ? null : _reset,
           child: Text(
             'Начать заново',
             style: TextStyle(
