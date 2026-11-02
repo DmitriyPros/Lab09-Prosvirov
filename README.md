@@ -1,17 +1,20 @@
-# slot_machine_prosvirov
+# Практическая работа №9
+**ФИО: Просвиров Дмитрий Анатольевич**
+**Группа: ИСП-241**
+**Дата: 22.10.2026**
+## Что изучено:
+* `s.Length`-измеряет длину строки
+* `s[i]`-символ по индексу
+* `Contains`, `StartsWith`, `EndsWith`-проверяют содержимое строки (вхождение в строку, начало строки, конец строки)
+* `ToUpper`, `ToLower`-меняют регистр (нижний и верхний)
+* `Replace`-заменяет фрагмент
+* `Substring`-вырезает часть строки
+* Работа с `StringBuilder`
+* В `C#` строки нельзя менять «на месте» — они неизменяемые. `text.ToUpper()` создаёт новую строку и возвращает её, но не меняет старую. Поэтому результат надо сохранить: `text = text`. `ToUpper()`; или в другую переменную. 
+***
 
-A new Flutter project.
+![result](/img/Final.png)
 
-## Getting Started
+![git](/img/step2_Prosvirov.png)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+***
